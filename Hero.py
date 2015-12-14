@@ -1,3 +1,7 @@
+from spell_class import Spell
+from weapon_class import Weapon
+
+
 class Hero:
     def __init__(self, name, title, health, mana, mana_regen_rate):
         self._name = name
@@ -7,6 +11,18 @@ class Hero:
         self._mana_regen_rate = mana_regen_rate
         self._max_health = health
         self._max_mana = mana
+        self._weapon_equipped = ''
+        self._spell_learned = ''
+
+    def is_alive(self):
+        if self._health > 0:
+            return True
+        return False
+
+    def can_cast(self):
+        if self._mana > 0:
+            return True
+        return False
 
     def known_as(self):
         return "{} the {}".format(self._name, self._title)
@@ -38,14 +54,15 @@ class Hero:
         else:
             self._mana += mana_points
 
-    def equip_weapon(self):
-        pass
+    def equip_weapon(self, weapon):
+        self._weapon_equipped = weapon
 
-    def learn_spell(self):
-        pass
+    def learn_spell(self, spell):
+        self._spell_learned = spell
 
-    def attack(self):
-        pass
-
-    
-
+    def attack(self, by="weapon"):
+        if by == "weapon":
+            return self._weapon_equipped.get_damage()
+        if by == "spell":
+            if self.can_cast:
+                return self._spell_learned.get_damage()
