@@ -21,19 +21,31 @@ class Dungeon:
             print(''.join(row))
 
     def spawn(self, hero):
-        for i in self.game_map:
-            for j in self.game_map[i]:
+        for i in range(len(self.game_map)):
+            for j in range(len(self.game_map[i])):
                 if self.game_map[i][j] == 'S':
                     self.game_map[i][j] = 'H'
                     self.hero = hero
                     return True
         return False
 
-    def in_map(slef):
-        pass
+    def in_map(self):
+        for i in range(len(self.game_map)):
+            if i >= 0 and i <= len(self.game_map):
+                for j in range(len(self.game_map[i])):
+                    if j >= 0 and j <= len(self.game_map[i]):
+                        return True
+            return False
 
-    def move_hero(self, derection):
-        pass
+    def move_hero(self, direction):
+        if direction == 'up':
+            pass
+        if direction == 'down':
+            pass
+        if direction == 'left':
+            pass
+        if direction == 'right':
+            pass
 
     def pick_treasures(self):
         pass
