@@ -3,6 +3,7 @@ class Dungeon:
     def __init__(self, path):
         self.path = path
         self.game_map = []
+        self.hero = None
 
     def load_content(self):
         data = open(self.path, 'r')
@@ -24,6 +25,7 @@ class Dungeon:
             for j in self.game_map[i]:
                 if self.game_map[i][j] == 'S':
                     self.game_map[i][j] = 'H'
+                    self.hero = hero
                     return True
         return False
 
