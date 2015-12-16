@@ -1,9 +1,10 @@
-class Hero:
+class Enemy:
     def __init__(self, health=100, mana=100, damage=20):
         self._health = health
         self._mana = mana
         self._max_health = health
         self._max_mana = mana
+        self._damage = damage
 
     def is_alive(self):
         if self._health > 0:
@@ -52,4 +53,5 @@ class Hero:
         if by == "weapon":
             return self._weapon_equipped.get_damage()
         if by == "spell":
+            self._mana -= self._spell_learned.get_mana_cost()
             return self._spell_learned.get_damage()

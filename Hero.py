@@ -11,8 +11,8 @@ class Hero:
         self._mana_regen_rate = mana_regen_rate
         self._max_health = health
         self._max_mana = mana
-        self._weapon_equipped = ''
-        self._spell_learned = ''
+        self._weapon_equipped = None
+        self._spell_learned = None
 
     def is_alive(self):
         if self._health > 0:
@@ -62,7 +62,11 @@ class Hero:
 
     def attack(self, by="weapon"):
         if by == "weapon":
+            if self._weapon_equipped is None:
+                print("No weapon equiped")
+                return 0
             return self._weapon_equipped.get_damage()
         if by == "spell":
             if self.can_cast:
+                self._mana -= self._spell_learned.get_mana_cost()
                 return self._spell_learned.get_damage()
