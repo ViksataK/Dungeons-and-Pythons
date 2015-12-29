@@ -16,7 +16,7 @@ class Hero:
         return False
 
     def can_cast(self):
-        if self._mana > 0:
+        if self._spell_learned and self._mana >= self._spell_learned.get_mana_cost():
             return True
         return False
 
@@ -63,6 +63,10 @@ class Hero:
                 return 0
             return self._weapon_equipped.get_damage()
         if by == "spell":
-            if self.can_cast:
+            if self._spell_learned is None:
+                print("No spell learned")
+                return 0
+            if self.can_cast():
                 self._mana -= self._spell_learned.get_mana_cost()
                 return self._spell_learned.get_damage()
+            return 0

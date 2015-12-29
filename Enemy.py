@@ -5,6 +5,8 @@ class Enemy:
         self._max_health = health
         self._max_mana = mana
         self._damage = damage
+        self._weapon_equipped = None
+        self._spell_learned = None
 
     def is_alive(self):
         if self._health > 0:
@@ -12,7 +14,7 @@ class Enemy:
         return False
 
     def can_cast(self):
-        if self._mana > 0:
+        if self._spell_learned and self._mana >= self._spell_learned.get_mana_cost():
             return True
         return False
 
@@ -50,8 +52,14 @@ class Enemy:
         self._spell_learned = spell
 
     def attack(self, by="weapon"):
+        if not self._weapon_equipped and not self._spell_learned:
+            return self._damage
         if by == "weapon":
+            if not self._weapon_equipped:
+                return self._damage
             return self._weapon_equipped.get_damage()
         if by == "spell":
+            if not self._spell_learned or not self.can_cast():
+                return self._damage
             self._mana -= self._spell_learned.get_mana_cost()
             return self._spell_learned.get_damage()

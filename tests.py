@@ -3,6 +3,7 @@ from Enemy import Enemy
 from weapon_class import Weapon
 from spell_class import Spell
 
+
 class TestEnemy(unittest.TestCase):
     def setUp(self):
         self.health = 99
@@ -26,11 +27,13 @@ class TestEnemy(unittest.TestCase):
         self.enemy._health = 0
         self.assertFalse(self.enemy.is_alive())
 
-    def test_can_cast_has_mana(self):
+    def test_can_cast_has_mana_for_spell(self):
+        self.enemy.learn_spell(self.spell)
         self.assertTrue(self.enemy.can_cast())
 
-    def test_can_cast_has_no_mana(self):
+    def test_can_cast_has_no_mana_for_spell(self):
         self.enemy._mana = 0
+        self.enemy.learn_spell(self.spell)
         self.assertFalse(self.enemy.can_cast())
 
     def test_get_health(self):
@@ -60,7 +63,7 @@ class TestEnemy(unittest.TestCase):
         self.assertFalse(self.enemy.take_healing(20))
 
     def test_take_healing_less_than_max_health(self):
-        self.enemy._health = 50 
+        self.enemy._health = 50
         healing_points = 5
         self.enemy.take_healing(healing_points)
         self.assertEqual(self.enemy._health, 55)
@@ -80,7 +83,28 @@ class TestEnemy(unittest.TestCase):
         self.enemy.equip_weapon(self.weapon)
         self.assertEqual(self.enemy._weapon_equipped, self.weapon)
 
+    def test_learn_spell(self):
+        self.enemy.learn_spell(self.spell)
+        self.assertEqual(self.enemy._spell_learned, self.spell)
+
+    def test_attack_with_weapon_has_weapon(self):
+        self.enemy.equip_weapon(self.weapon)
+        self.assertEqual(self.enemy.attack(), self.enemy._weapon_equipped.get_damage())
+
+    def test_attack_with_weapon_has_no_weapon(self):
+        self.assertEqual(self.enemy.attack(), self.enemy._damage)
+
+    def test_attack_with_spell_has_spell(self):
+        self.enemy.learn_spell(self.spell)
+        self.assertEqual(self.enemy.attack('spell'), self.enemy._spell_learned.get_damage())
+
+    def test_attack_with_spell_has_spell_can_not_cast(self):
+        self.enemy.learn_spell(self.spell)
+        self.enemy._mana = 0
+        self.assertEqual(self.enemy.attack('spell'), self.enemy._damage)
+
+    def test_attack_with_spell_has_no_spell(self):
+        self.assertEqual(self.enemy.attack('spell'), self.enemy._damage)
 
 if __name__ == '__main__':
     unittest.main()
-
