@@ -1,7 +1,3 @@
-from spell_class import Spell
-from weapon_class import Weapon
-
-
 class Hero:
     def __init__(self, name, title, health, mana, mana_regen_rate):
         self._name = name
