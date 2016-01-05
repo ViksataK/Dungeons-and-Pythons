@@ -36,7 +36,7 @@ class Hero:
             self._health -= damage_taken
 
     def take_healing(self, healing_points):
-        if self._health < 0:
+        if self._health <= 0:
             return False
         if self._health + healing_points > self._max_health:
             self._health = self._max_health
