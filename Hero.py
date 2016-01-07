@@ -20,9 +20,11 @@ class Hero:
         return False
 
     def can_cast(self):
-        if self._mana > 0:
-            return True
-        return False
+        if not self._spell_learned:
+            return False
+        if self._mana < self._spell_learned.get_mana_cost():
+            return False
+        return True
 
     def known_as(self):
         return "{} the {}".format(self._name, self._title)
