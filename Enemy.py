@@ -50,8 +50,9 @@ class Enemy:
         self._spell_learned = spell
 
     def attack(self, by="weapon"):
-        if by == "weapon":
-            return self._weapon_equipped.get_damage()
-        if by == "spell":
-            self._mana -= self._spell_learned.get_mana_cost()
-            return self._spell_learned.get_damage()
+        ##if by == "weapon":
+          ##  return self._weapon_equipped.get_damage()
+        ##if by == "spell":
+          ##  self._mana -= self._spell_learned.get_mana_cost()
+        ##    return self._spell_learned.get_damage()
+        return self._damage
